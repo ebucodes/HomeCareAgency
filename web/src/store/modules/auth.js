@@ -40,7 +40,7 @@ const actions = {
         commit('setRole', response?.data.user?.role);
         commit('setLoggedIn', true);
 
-        state.role
+        // state.role
 
         // window.location.href = `${VITE_API_WEB}/dashboard`
         // window.location.href = `${import.meta.env.VITE_API_WEB}${state.role}/dashboard`
