@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'client', 'staff']);
+            $table->enum('role', ['admin', 'client', 'worker']);
             $table->boolean('isActive');
+            $table->string('worker')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
