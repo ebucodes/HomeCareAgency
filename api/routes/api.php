@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\WorkerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         });
     });
 
-    // admin only routes
+    // client only routes
     Route::group(['middleware' => ['authRole:client']], function () {
         Route::group(['prefix' => 'client'], function () {
             //
@@ -71,6 +72,19 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::group(['prefix' => 'incident'], function () {
                 Route::post('report', [ClientController::class, 'reportIncident']);
                 Route::get('view', [ClientController::class, 'viewSingleIncident']);
+            });
+        });
+    });
+
+    // health client only routes
+    Route::group(['middleware' => ['authRole:worker']], function () {
+        Route::group(['prefix' => 'health-care-worker'], function () {
+            //
+            Route::get('my-incidents', [WorkerController::class, 'fetchIncidents']);
+
+            // report new incidents
+            Route::group(['prefix' => 'incident'], function () {
+                Route::post('log', [WorkerController::class, 'logIncident']);
             });
         });
     });
