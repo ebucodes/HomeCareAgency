@@ -1,3 +1,45 @@
+<script setup>
+import { ref, onMounted, computed, watch } from 'vue';
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const initialValues = ref({
+    userName: "testadmin",
+    password: "password"
+});
+
+
+const submitForm = async (e) => {
+    e.preventDefault();
+
+    try {
+        // setLoading(true)
+
+        const resp = await store.dispatch("loginAsync", initialValues.value)
+            .catch((error) => {
+                console.log(error)
+                throw error
+            })
+            .then((resp) => {
+                return resp
+            });
+
+        console.log(resp)
+
+        // setLoading(false)
+        
+
+
+
+    } catch (error) {
+        console.log(error)
+        // setLoading(false)
+    }
+
+}
+
+</script>
 <template>
     <div>
 
@@ -15,17 +57,15 @@
                                 </a>
                             </div>
                             <div class="login-main">
-                                <form class="theme-form needs-validation" novalidate
-                                    @submit.prevent="onCustomStyleSubmit">
+                                <form class="theme-form needs-validation" novalidate @submit.prevent="submitForm">
                                     <h4>Sign in to account</h4>
                                     <p>Enter your username & password to login</p>
                                     <div class="form-group mb-3">
                                         <label class="col-form-label">Username</label>
                                         <input class="form-control" type="text" required=""
-                                            placeholder="Enter your username" v-model="username"
-                                            v-bind:class="formSubmitted ? userError ? 'is-invalid' : 'is-valid' : ''">
-                                        <div class="invalid-feedback" id="feedback-1" v-if="errors[1]">{{
-                                            errors[1].msgUsername }}</div>
+                                            placeholder="Enter your username" v-model="initialValues.userName">
+                                        <!-- <div class="invalid-feedback" id="feedback-1" v-if="errors[1]">{{
+                                            errors[1].msgUsername }}</div> -->
 
                                     </div>
 
@@ -33,11 +73,10 @@
                                         <label class="col-form-label">Password</label>
                                         <div class="form-input position-relative">
                                             <input class="form-control" type="password" required=""
-                                                placeholder="Enter your password" v-model="password"
-                                                v-bind:class="formSubmitted ? passwordError ? 'is-invalid' : 'is-valid' : ''">
-                                            <div class="show-hide"><span class="show"> </span></div>
+                                                placeholder="Enter your password" v-model="initialValues.password">
+                                            <!-- <div class="show-hide"><span class="show"> </span></div>
                                             <div class="invalid-feedback" id="feedback-1" v-if="errors[0]">{{
-                                                errors[0].message }}</div>
+                                                errors[0].message }}</div> -->
                                         </div>
                                     </div>
                                     <div class="form-group mb-0">
@@ -69,12 +108,3 @@
     </div>
 </template>
 
-<script>
-import Swal from 'sweetalert2'; // Import SweetAlert
-import axios from 'axios'; // Import Axios for making HTTP requests
-import formValidation from "@/mixins/commen/formValidation"; // Import your form validation mixin
-
-export default {
-    mixins: [formValidation],
-}
-</script>

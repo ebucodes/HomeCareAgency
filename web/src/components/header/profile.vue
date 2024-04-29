@@ -22,7 +22,7 @@
       <li>
         <vue-feather type="settings"></vue-feather><span>Settings</span>
       </li>
-      <li>
+      <li @click="logout">
         <vue-feather type="log-in"></vue-feather><span>Log out</span>
       </li>
     </ul>
@@ -31,19 +31,24 @@
 
 <script>
 // import firebase from 'firebase';
-// import UserAuth from '../../auth/js/index';
+// import UserAuth from '@/store/module/auth';
 
 export default {
   name: 'Profile',
   methods: {
-    logout: function () {
+    logout () {
       // firebase
       //   .auth()
       //   .signOut()
       //   .then(() => {
       //     UserAuth.Logout();
-      this.$router.replace('/auth/login');
-      localStorage.removeItem('User')
+      // this.$router.replace('/auth/login');
+      // localStorage.removeItem('User')
+      
+    localStorage.removeItem("HCA_TOKEN");
+    localStorage.removeItem("HCA_LOGGER");
+      localStorage.removeItem("HCA_ROLE");
+      this.$router.replace('/');
     }
     // },
   },
