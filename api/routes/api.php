@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('fetch-workers', [WorkerController::class, 'fetchWorkers']);
 
+
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register/client', [AuthController::class, 'registerClient']);
@@ -29,7 +31,7 @@ Route::group(['prefix' => 'auth'], function () {
 //
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // routes that can be viewed by any roles
-
+    Route::get('my-activities', [ActivityController::class, 'userLog']);
     // admin only routes
     Route::group(['middleware' => ['authRole:admin']], function () {
         Route::group(['prefix' => 'admin'], function () {

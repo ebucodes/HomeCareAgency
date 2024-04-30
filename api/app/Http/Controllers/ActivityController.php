@@ -17,5 +17,6 @@ class ActivityController extends Controller
     public function userLog()
     {
         $logs = Activity::where('user', auth()->user()->userName)->get();
+        return successResponse('Successful', $logs);
     }
 }
