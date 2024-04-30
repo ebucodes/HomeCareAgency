@@ -26,12 +26,7 @@ const submitForm = async (e) => {
             });
 
         console.log(resp)
-
         // setLoading(false)
-        
-
-
-
     } catch (error) {
         console.log(error)
         // setLoading(false)
@@ -40,9 +35,9 @@ const submitForm = async (e) => {
 }
 
 </script>
+
 <template>
     <div>
-
         <div class="container-fluid">
             <div class="row ">
                 <div class="col-12 p-0">
@@ -95,7 +90,7 @@ const submitForm = async (e) => {
                                         </div>
                                     </div>
                                     <p class="mt-4 mb-0 text-center">Don't have account?<a class="ms-2"
-                                            href="sign-up.html">Create
+                                            href="/register/client">Create
                                             Account</a></p>
                                 </form>
                             </div>
@@ -107,4 +102,3 @@ const submitForm = async (e) => {
 
     </div>
 </template>
-

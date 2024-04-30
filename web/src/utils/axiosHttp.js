@@ -2,7 +2,7 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 
 const Toast = Swal.mixin({
-    toast: true,
+    toast: false,
     position: "top-end",
     showConfirmButton: false,
     timer: 3000,
@@ -14,7 +14,7 @@ const Toast = Swal.mixin({
 });
 
 const instance = axios.create({
-    baseURL: 'http://127.0.0.1:4444/api/',
+    baseURL: 'http://127.0.0.1:8000/api/',
     // timeout: 1000,
     headers: {
         'Accept': 'application/json',

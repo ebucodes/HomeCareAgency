@@ -50,6 +50,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'worker' => $request->worker,
             'role' => 'client',
             'isActive' => true
         ]);
@@ -73,7 +74,6 @@ class AuthController extends Controller
             'email' => 'bail|nullable|email|unique:users|required_without_all:phone',
             'phone' => 'bail|nullable|numeric|min:9|unique:users|required_without_all:email',
             'password' => 'bail|required|min:6',
-            'role' => 'bail|required'
         ], [
             'userName.unique' => 'This user name already exists',
             'email.unique' => 'This email address already exists',

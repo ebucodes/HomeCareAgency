@@ -19,16 +19,13 @@ const getters = {
 
 const actions = {
   async loginAsync({ commit, state }, payload) {
-
-    
+  
     try {
       const response = await axios.post('/auth/login', payload)
               .then((res) => {
                   return res.data;
               });
       if (response) {
-
-
         localStorage.setItem("HCA_TOKEN", response?.data?.authorization?.token);
         localStorage.setItem("HCA_LOGGER", btoa(JSON.stringify(response?.data?.user)));
         localStorage.setItem("HCA_ROLE", response?.data?.user?.role);
@@ -40,7 +37,7 @@ const actions = {
         commit('setRole', response?.data.user?.role);
         commit('setLoggedIn', true);
 
-        state.role
+        // state.role
 
         // window.location.href = `${VITE_API_WEB}/dashboard`
         // window.location.href = `${import.meta.env.VITE_API_WEB}${state.role}/dashboard`

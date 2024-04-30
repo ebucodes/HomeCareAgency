@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['admin', 'client', 'worker'];
+        $roles = ['admin'];
 
         foreach ($roles as $index => $role) {
             $email = "test." . $role . "@example.com";

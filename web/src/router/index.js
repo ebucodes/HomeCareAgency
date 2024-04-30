@@ -1,13 +1,14 @@
 import {
-  createRouter,
-  createWebHistory
+    createRouter,
+    createWebHistory
 } from "vue-router"
 import { useStore } from "vuex";
 import Body from '../components/body';
 import Default from '../pages/dashboard/defaultPage.vue';
 /* Auth */
 import Login from '../pages/auth/login';
-import Register from '../pages/auth/register';
+import RegisterWorker from '../pages/auth/register_worker';
+import RegisterClient from '../pages/auth/register_client';
 import AdminDashboard from '../pages/dashboard/admin';
 import ClientDashboard from '../pages/dashboard/client';
 import WorkerDashboard from '../pages/dashboard/worker';
@@ -15,24 +16,34 @@ import AdminConfiguration from '../pages/admin/configuration';
 
 
 const routes = [
-  /* Auth */
-  {
-    path: '/',
-    component: Login,
-    name: 'login',
-    meta: {
-      title: ' Login ',
+    /* Auth */
+    {
+        path: '/',
+        component: Login,
+        name: 'login',
+        meta: {
+            title: ' Login ',
+        },
     },
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: {
-      title: ' Register ',
-    }
-  },
+    // register for worker
+    {
+        path: '/register/health-care-worker',
+        name: 'registerWorker',
+        component: RegisterWorker,
+        meta: {
+            title: ' Register ',
+        }
+    },
 
+    // register for client
+{
+        path: '/register/client',
+        name: 'registerClient',
+        component: RegisterClient,
+        meta: {
+            title: ' Register ',
+        }
+    },
     /* Admin */
     {
         path: '/admin',
@@ -94,38 +105,41 @@ const routes = [
 
 
 
-  {
-    path: '/default',
-    component: Body,
-    children: [{
-        path: '',
-        name: 'defaultRoot',
-        component: Default,
-      },
+    {
+        path: '/default',
+        component: Body,
+        children: [{
+            path: '',
+            name: 'defaultRoot',
+            component: Default,
+        },
 
-    ]
-  },
+        ]
+    },
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 })
 router.beforeEach((to, from, next) => {
     const store = useStore();
     if (to.meta.title) {
-        document.title = to.meta.title + ' | Home Care Agency';      
+        document.title = to.meta.title + ' | Home Care Agency';
     }
 
-    const path = ['/', '/register'];
+    const path = ['/', '/register/client','/register/health-care-worker'];
     console.log(to.meta)
     // console.log(store.state.auth.user)
     // console.log(store.getters?.getUser)
     // console.log(store.getters.getUser)
 
-    if (store.state.auth.user) {
-    return next();
-  }
-  next('/');
+    if (store.state.auth.user || path.includes(to.path)) {
+        return next();
+    }
+    next('/');
 });
 export default router
+//   if (path.includes(to.path) || localStorage.getItem('User')) {
+//     return next();
+//   }
