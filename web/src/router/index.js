@@ -14,7 +14,7 @@ import RegisterClient from '../pages/auth/register_client';
 import AdminDashboard from '../pages/dashboard/admin';
 import ClientDashboard from '../pages/dashboard/client';
 import WorkerDashboard from '../pages/dashboard/worker';
-import AdminConfiguration from '../pages/admin/configuration';
+import AdminConfiguration from '@/pages/admin/configuration';
 import MyActivity from "@/pages/myActivity.vue";
 
 
@@ -55,18 +55,28 @@ const routes = [
         meta: {
             auth: true,
         },
-        children: [{
+        children: [
+            // 
+            {
                 path: 'dashboard',
                 name: 'adminDashboard',
                 component: AdminDashboard,
             },
+            // 
             {
                 path: 'configuration',
                 name: 'adminConfiguration',
                 component: AdminConfiguration,
             },
+            // 
+            {
+                path: 'roles',
+                name: 'adminRoles',
+                component: AdminConfiguration,
+            },
         ]
     },
+
     /* Client */
     {
         path: '/client',
@@ -75,17 +85,12 @@ const routes = [
             auth: true,
         },
         children: [{
-                path: 'dashboard',
-                name: 'clientDashboard',
-                component: ClientDashboard,
-            },
-            {
-                path: 'configuration',
-                name: 'adminConfiguration',
-                component: AdminConfiguration,
-            },
-        ]
+            path: 'dashboard',
+            name: 'clientDashboard',
+            component: ClientDashboard,
+        }, ]
     },
+
     /* Worker */
     {
         path: '/worker',
@@ -98,11 +103,7 @@ const routes = [
                 name: 'workerDashboard',
                 component: WorkerDashboard,
             },
-            {
-                path: 'configuration',
-                name: 'adminConfiguration',
-                component: AdminConfiguration,
-            },
+
         ]
     },
 
