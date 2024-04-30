@@ -3,6 +3,8 @@ export default {
         return {
             errors: [],
             formSubmitted: false,
+            name: "",
+            nameError: false,
             username: "",
             userError: false,
             password: "",

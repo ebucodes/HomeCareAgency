@@ -1,3 +1,4 @@
+import {useStore} from "vuex";
 import axios from "axios";
 import Swal from 'sweetalert2'
 
@@ -24,7 +25,13 @@ const instance = axios.create({
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
+    
+    const store = useStore();
+    
     // Do something before request is sent
+    // console.log(store.getters?.getToken)
+    console.log('frfrfr')
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('HCA_TOKEN')
     return config;
 }, function (error) {
     // Do something with request error

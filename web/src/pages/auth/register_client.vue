@@ -88,8 +88,9 @@
 
                                     <!-- Submit Button -->
                                     <div class="form-group mb-6">
-                                        <button :disabled="!isFormValid" class="btn btn-primary btn-block">
-                                            Register as a Client
+                                        <button :disabled="!isFormValid || loading" class="btn btn-primary btn-block">
+                                            <span v-if="loading">Please Wait...</span>
+                                            <span v-else>Register as a Client</span>
                                         </button>
                                     </div>
 
@@ -183,8 +184,9 @@ export default {
                     });
                     this.clearForm();
                     // Redirect to login page after successful registration
-                    const router = useRouter();
-                    router.push('/'); // Assuming '/' is the path for the login page
+                    window.location.href = 'http://localhost:8080/'
+                    // const router = useRouter();
+                    // router.push('/'); // Assuming '/' is the path for the login page
 
                 })
                 .catch(error => {

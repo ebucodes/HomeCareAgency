@@ -17,33 +17,82 @@
         </div>
       </li>
       <!-- Admin Menu -->
-      <li class="sidebar-list">
-        <label class="badge badge-light-primary"></label><a class="sidebar-link sidebar-title" href="#">
-          <svg class="stroke-icon">
-            <use href="@/assets/svg/icon-sprite.svg#stroke-home"></use>
-          </svg>
-          <svg class="fill-icon">
-            <use href="@/assets/svg/icon-sprite.svg#fill-home"></use>
-          </svg>
-          <span class="lan-3">Dashboard </span></a>
-      </li>
-      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="/admin/configuration">
-          <vue-feather type="settings"></vue-feather>
-          <span>Settings / Configuration</span></a>
-      </li>
-      <li class="sidebar-list">
-        <a class="sidebar-link sidebar-title" href="#">
-          <vue-feather type="users"></vue-feather>
-          <span>Users</span></a>
-      </li>
-      <li class="sidebar-list">
-        <a class="sidebar-link sidebar-title" href="/my-activities">
-          <vue-feather type="trending-up"></vue-feather>
-          <span>All Activities </span>
-        </a>
-      </li>
+      <span v-if="this.$store.state.auth.role == 'admin'">
+        <li class="sidebar-list">
+          <label class="badge badge-light-primary"></label><a class="sidebar-link sidebar-title"
+            href="/admin/dashboard">
+            <svg class="stroke-icon">
+              <use href="@/assets/svg/icon-sprite.svg#stroke-home"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="@/assets/svg/icon-sprite.svg#fill-home"></use>
+            </svg>
+            <span class="lan-3">Dashboard </span></a>
+        </li>
+        <hr>
+        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="/admin/configuration">
+            <vue-feather type="settings"></vue-feather>
+            <span>Settings / Configuration</span></a>
+        </li>
+        <!-- <hr>
+        <li class="sidebar-list">
+          <a class="sidebar-link sidebar-title" href="/admin/users">
+            <vue-feather type="users"></vue-feather>
+            <span>Users</span></a>
+        </li> -->
+        <hr>
+        <li class="sidebar-list">
+          <a class="sidebar-link sidebar-title" href="/my-activities">
+            <vue-feather type="trending-up"></vue-feather>
+            <span>My Activities </span>
+          </a>
+        </li>
+      </span>
+
+
       <!-- Client -->
+      <span v-else-if="this.$store.state.auth.role == 'client'">
+        <li class="sidebar-list">
+          <label class="badge badge-light-primary"></label><a class="sidebar-link sidebar-title"
+            href="/client/dashboard">
+            <svg class="stroke-icon">
+              <use href="@/assets/svg/icon-sprite.svg#stroke-home"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="@/assets/svg/icon-sprite.svg#fill-home"></use>
+            </svg>
+            <span class="lan-3">Dashboard </span></a>
+        </li>
+        <hr>
+        <li class="sidebar-list">
+          <a class="sidebar-link sidebar-title" href="/my-activities">
+            <vue-feather type="trending-up"></vue-feather>
+            <span>My Activities </span>
+          </a>
+        </li>
+      </span>
       <!-- Worker -->
+      <span v-else-if="this.$store.state.auth.role == 'worker'">
+        <li class="sidebar-list">
+          <label class="badge badge-light-primary"></label><a class="sidebar-link sidebar-title"
+            href="/worker/dashboard">
+            <svg class="stroke-icon">
+              <use href="@/assets/svg/icon-sprite.svg#stroke-home"></use>
+            </svg>
+            <svg class="fill-icon">
+              <use href="@/assets/svg/icon-sprite.svg#fill-home"></use>
+            </svg>
+            <span class="lan-3">Dashboard </span></a>
+        </li>
+        <hr>
+        <li class="sidebar-list">
+          <a class="sidebar-link sidebar-title" href="/my-activities">
+            <vue-feather type="trending-up"></vue-feather>
+            <span>My Activities </span>
+          </a>
+        </li>
+      </span>
+
     </ul>
   </div>
 </template>

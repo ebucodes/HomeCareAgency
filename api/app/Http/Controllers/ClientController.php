@@ -30,7 +30,7 @@ class ClientController extends Controller
     public function reportIncident(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'client' => 'required',
+            // 'client' => 'required',
             'type' => 'required',
             'desc' => 'required',
             'priority' => 'required'
@@ -49,7 +49,7 @@ class ClientController extends Controller
             'desc' => $request->desc,
             'priority' => $request->priority,
             "worker" => auth()->user()->worker,
-            'status' => 'pending'
+            'status' => 'Pending'
         ]);
 
         if ($create) {

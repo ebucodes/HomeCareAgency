@@ -3,14 +3,15 @@
     <div class="media profile-media">
       <img class="b-r-10" src="@/assets/images/dashboard/profile.png" alt="" />
       <div class="media-body">
-        <span>Emay Walter</span>
-        <p class="mb-0 font-roboto">
-          Admin <i class="middle fa fa-angle-down"></i>
+        <span>{{ this.$store.getters?.getUser?.firstName + ' ' + this.$store.getters?.getUser?.lastName }}</span>
+        <!-- <span>{{ this.$store.getters.getUser?.firstName }}</span> -->
+        <p class="mb-0 font-roboto text-uppercase">
+          {{ this.$store.state.auth.role }} <i class="middle fa fa-angle-down"></i>
         </p>
       </div>
     </div>
     <ul class="profile-dropdown onhover-show-div">
-      <li>
+      <!-- <li>
         <vue-feather type="user"></vue-feather><span>Account </span>
       </li>
       <li>
@@ -18,9 +19,8 @@
       </li>
       <li>
         <vue-feather type="file-text"></vue-feather><span>Taskboard</span>
-      </li>
+      </li> -->
       <li>
-        <vue-feather type="settings"></vue-feather><span>Settings</span>
       </li>
       <li @click="logout">
         <vue-feather type="log-in"></vue-feather><span>Log out</span>
@@ -36,7 +36,7 @@
 export default {
   name: 'Profile',
   methods: {
-    logout () {
+    logout() {
       // firebase
       //   .auth()
       //   .signOut()
@@ -44,9 +44,9 @@ export default {
       //     UserAuth.Logout();
       // this.$router.replace('/auth/login');
       // localStorage.removeItem('User')
-      
-    localStorage.removeItem("HCA_TOKEN");
-    localStorage.removeItem("HCA_LOGGER");
+
+      localStorage.removeItem("HCA_TOKEN");
+      localStorage.removeItem("HCA_LOGGER");
       localStorage.removeItem("HCA_ROLE");
       this.$router.replace('/');
     }

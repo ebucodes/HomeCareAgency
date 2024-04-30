@@ -6,6 +6,8 @@ use App\Helpers\ResponseStatusCodes;
 use App\Models\IncidentType;
 use App\Models\Priority;
 use App\Models\Role;
+use App\Models\Status;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +20,7 @@ class AdminController extends Controller
     {
         $roles = Role::latest()->get();
         // log the activity of the user
-        logAction(auth()->user()->userName, 'List All Roles', "fetched all the roles", $request->ip(), $request->userAgent());
+        // logAction(auth()->user()->userName, 'List All Roles', "fetched all the roles", $request->ip(), $request->userAgent());
         return successResponse('Successful', $roles);
     }
 
@@ -92,15 +94,16 @@ class AdminController extends Controller
         }
 
         //
-        $roles = Role::find($request->id);
+        $roles = Role::where('id', $request->id)->first();
         // delete new role
-        $delete = $roles->update(['isActive' => false]);
+        // $delete = $roles->update(['isActive' => false]);
+        $delete = $roles->delete();
 
         if ($delete) {
             // log the activity of the user
-            logAction(auth()->user()->userName, 'Deactivated Role', "deactivated an role", $request->ip(), $request->userAgent());
+            logAction(auth()->user()->userName, 'Deleted a Role', " deleted a role", $request->ip(), $request->userAgent());
             // success response of the action
-            return successResponse("You have successfully deactivated an role", $delete);
+            return successResponse("You have successfully deleted a role", $delete);
         }
     }
 
@@ -185,8 +188,8 @@ class AdminController extends Controller
         //
         $priorities = Priority::find($request->id);
         // delete new Priority
-        $delete = $priorities->update(['isActive' => false]);
-
+        // $delete = $priorities->update(['isActive' => false]);
+        $delete = $priorities->delete();
         if ($delete) {
             // log the activity of the user
             logAction(auth()->user()->userName, 'Deactivated Priority', "deactivated an priority", $request->ip(), $request->userAgent());
@@ -201,7 +204,7 @@ class AdminController extends Controller
     {
         $incident_types = IncidentType::latest()->get();
         // log the activity of the user
-        logAction(auth()->user()->userName, 'List All Incident Types', "fetched all the incident types", $request->ip(), $request->userAgent());
+        logAction(auth()->user()->userName, 'List All Statu', "fetched all the incident types", $request->ip(), $request->userAgent());
         return successResponse('Successful', $incident_types);
     }
 
@@ -278,7 +281,8 @@ class AdminController extends Controller
         //
         $incident_types = IncidentType::find($request->id);
         // delete new incident type
-        $delete = $incident_types->update(['isActive' => false]);
+        // $delete = $incident_types->update(['isActive' => false]);
+        $delete = $incident_types->delete();
 
         if ($delete) {
             // log the activity of the user
@@ -286,5 +290,120 @@ class AdminController extends Controller
             // success response of the action
             return successResponse("You have successfully deactivated an incident type", $delete);
         }
+    }
+
+    //
+    public function fetchAllStatuses(Request $request): JsonResponse
+    {
+        $statuses = Status::latest()->get();
+        // log the activity of the user
+        // logAction(auth()->user()->userName, 'List All Statu', "fetched all the incident types", $request->ip(), $request->userAgent());
+        return successResponse('Successful', $statuses);
+    }
+
+    //
+    public function listStatuses(): JsonResponse
+    {
+        $statuses = Status::where('isActive', true)->latest()->get();
+        return successResponse('Successful', $statuses);
+    }
+
+
+    //
+    public function createStatus(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|unique:statuses',
+        ]);
+
+        // failed validation
+        if ($validator->fails()) {
+            return errorResponse(ResponseStatusCodes::VALIDATOR_ERROR, "Validation Error", $validator->errors()->all(), Response::HTTP_UNAUTHORIZED);
+        }
+
+        // create new incident type
+        $create = Status::create([
+            'name' => $request->name,
+            'isActive' => true
+        ]);
+
+        if ($create) {
+            // log the activity of the user
+            logAction(auth()->user()->userName, 'New Status', "created a new status named: {$request->name}", $request->ip(), $request->userAgent());
+            // success response of the action
+            return successResponse("You have successfully created a new status", $create);
+        }
+    }
+
+    //
+    public function updateStatus(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required|string|unique:statuses',
+        ]);
+
+        // failed validation
+        if ($validator->fails()) {
+            return errorResponse(ResponseStatusCodes::VALIDATOR_ERROR, "Validation Error", $validator->errors()->all(), Response::HTTP_UNAUTHORIZED);
+        }
+        $status = Status::find($request->id);
+        // update new incident type
+        $update = $status->update(['name' => $request->name]);
+
+        if ($update) {
+            // log the activity of the user
+            logAction(auth()->user()->userName, 'Update Status', "updated a status", $request->ip(), $request->userAgent());
+            // success response of the action
+            return successResponse("You have successfully updated a status", $update);
+        }
+    }
+
+    //
+    public function deleteStatus(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+
+        // failed validation
+        if ($validator->fails()) {
+            return errorResponse(ResponseStatusCodes::VALIDATOR_ERROR, "Validation Error", $validator->errors()->all(), Response::HTTP_UNAUTHORIZED);
+        }
+
+        //
+        $status = Status::find($request->id);
+        // delete new incident type
+        // $delete = $status->update(['isActive' => false]);
+        $delete = $status->delete();
+
+        if ($delete) {
+            // log the activity of the user
+            logAction(auth()->user()->userName, 'Deactivated Status', "deactivated a status", $request->ip(), $request->userAgent());
+            // success response of the action
+            return successResponse("You have successfully deactivated a status", $delete);
+        }
+    }
+
+
+    //
+    public function listUsers(): JsonResponse
+    {
+        $users = User::latest()->get();
+        return successResponse('Successful', $users);
+    }
+
+    //
+    public function listAdmins(): JsonResponse
+    {
+        $admins = Status::where('isActive', true)->where('role', 'admin')->latest()->get();
+        return successResponse('Successful', $admins);
+    }
+
+    //
+    public function listClients(): JsonResponse
+    {
+        $clients = Status::where('role', 'client')->where('isActive', true)->latest()->get();
+        return successResponse('Successful', $clients);
     }
 }

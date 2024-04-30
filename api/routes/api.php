@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,16 +32,19 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // routes that can be viewed by any roles
     Route::get('my-activities', [ActivityController::class, 'userLog']);
+    Route::get('types/list', [AdminController::class, 'listIncidentTypes']);
+    Route::get('priorities/list', [AdminController::class, 'listPriorities']);
+    Route::get('statuses/list', [AdminController::class, 'listStatuses']);
+
     // admin only routes
     Route::group(['middleware' => ['authRole:admin']], function () {
         Route::group(['prefix' => 'admin'], function () {
             //
             Route::get('dashboard', [AdminController::class, 'dashboard']);
-
+            Route::get('users/all', [AdminController::class, 'listStatuses']);
             // incident types
             Route::group(['prefix' => 'incident-type'], function () {
                 Route::get('fetch-all', [AdminController::class, 'fetchAllIncidentTypes']);
-                Route::get('list', [AdminController::class, 'listIncidentTypes']);
                 Route::post('create', [AdminController::class, 'createIncidentType']);
                 Route::post('update', [AdminController::class, 'updateIncidentType']);
                 Route::post('deactivate', [AdminController::class, 'deleteIncidentType']);
@@ -59,10 +62,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             // priorities
             Route::group(['prefix' => 'priority'], function () {
                 Route::get('fetch-all', [AdminController::class, 'fetchAllPriorities']);
-                Route::get('list', [AdminController::class, 'listPriorities']);
                 Route::post('create', [AdminController::class, 'createPriority']);
                 Route::post('update', [AdminController::class, 'updatePriority']);
                 Route::post('deactivate', [AdminController::class, 'deletePriority']);
+            });
+
+            // statuses
+            Route::group(['prefix' => 'status'], function () {
+                Route::get('fetch-all', [AdminController::class, 'fetchAllStatuses']);
+                Route::post('create', [AdminController::class, 'createStatus']);
+                Route::post('update', [AdminController::class, 'updateStatus']);
+                Route::post('deactivate', [AdminController::class, 'deleteStatus']);
             });
         });
     });

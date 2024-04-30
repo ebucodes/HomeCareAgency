@@ -132,7 +132,7 @@ class AuthController extends Controller
             'authorization' => [
                 'type' => 'Bearer',
                 'token' => $token,
-                'expires_in' => config('sanctum.expiration') * 60,
+                'expires_in' => config('sanctum.expiration') * 360,
             ],
             'user' => UserResource::make($user),
         ];

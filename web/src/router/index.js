@@ -16,7 +16,12 @@ import ClientDashboard from '../pages/dashboard/client';
 import WorkerDashboard from '../pages/dashboard/worker';
 import AdminConfiguration from '@/pages/admin/configuration';
 import MyActivity from "@/pages/myActivity.vue";
-
+import AdminRoles from "@/pages/admin/roles";
+import AdminPriority from "@/pages/admin/priority";
+import AdminStatus from "@/pages/admin/status";
+import AdminTypes from "@/pages/admin/types";
+import AllActivities from "@/pages/admin/activities";
+import AdminUsers from "@/pages/admin/users";
 
 const routes = [
     /* Auth */
@@ -56,23 +61,60 @@ const routes = [
             auth: true,
         },
         children: [
-            // 
+            // admin dashboard
             {
                 path: 'dashboard',
                 name: 'adminDashboard',
                 component: AdminDashboard,
             },
-            // 
+
+            // configuration
             {
                 path: 'configuration',
                 name: 'adminConfiguration',
                 component: AdminConfiguration,
             },
-            // 
+
+            // roles
             {
                 path: 'roles',
                 name: 'adminRoles',
-                component: AdminConfiguration,
+                component: AdminRoles,
+            },
+
+            // priority
+            {
+                path: 'priority',
+                name: 'adminPriority',
+                component: AdminPriority,
+            },
+
+            // status
+            {
+                path: 'status',
+                name: 'adminStatus',
+                component: AdminStatus,
+            },
+
+            // types
+            {
+                path: 'incident-types',
+                name: 'adminTypes',
+                component: AdminTypes,
+            },
+
+            // users
+            {
+                path: 'users',
+                name: 'adminUsers',
+                component: AdminUsers,
+            },
+
+            // activities
+            {
+                path: 'activities',
+                name: 'allActivities',
+                component: AllActivities,
             },
         ]
     },
@@ -84,11 +126,14 @@ const routes = [
         meta: {
             auth: true,
         },
-        children: [{
-            path: 'dashboard',
-            name: 'clientDashboard',
-            component: ClientDashboard,
-        }, ]
+        children: [
+            // 
+            {
+                path: 'dashboard',
+                name: 'clientDashboard',
+                component: ClientDashboard,
+            },
+        ]
     },
 
     /* Worker */
@@ -149,7 +194,7 @@ router.beforeEach((to, from, next) => {
     }
 
     const path = ['/', '/register/client', '/register/health-care-worker'];
-    console.log(to.meta)
+    // console.log(to.meta)
     // console.log(store.state.auth.user)
     // console.log(store.getters?.getUser)
     // console.log(store.getters.getUser)
