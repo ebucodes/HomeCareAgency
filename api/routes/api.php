@@ -18,9 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('fetch-workers', [WorkerController::class, 'fetchWorkers']);
+
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
+    Route::post('register/client', [AuthController::class, 'registerClient']);
+    Route::post('register/worker', [AuthController::class, 'registerWorker']);
 });
 
 //

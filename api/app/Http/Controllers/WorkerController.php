@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseStatusCodes;
 use App\Models\Incident;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,6 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WorkerController extends Controller
 {
+    //
+    public function fetchWorkers(): JsonResponse
+    {
+        $workers = User::where('role', 'worker')->where('isActive', true)->get();
+        return successResponse('Successful', $workers);
+    }
+
     //
     public function fetchIncidents(): JsonResponse
     {
