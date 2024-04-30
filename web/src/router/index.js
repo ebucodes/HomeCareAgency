@@ -47,14 +47,7 @@ const routes = [
         }
     },
 
-    {
-        path: '/my-activities',
-        component: MyActivity,
-        name: 'myActivity',
-        meta: {
-            title: ' My Activity ',
-        },
-    },
+
     /* Admin */
     {
         path: '/admin',
@@ -113,9 +106,6 @@ const routes = [
         ]
     },
 
-
-
-
     {
         path: '/default',
         component: Body,
@@ -127,6 +117,24 @@ const routes = [
 
         ]
     },
+
+    {
+        path: '/my-activities',
+        component: Body,
+        meta: {
+            auth: true,
+        },
+        children: [{
+                path: '',
+                name: 'myActivity',
+                component: MyActivity,
+                title: ' My Activity ',
+            },
+
+        ]
+    },
+
+
 ]
 
 const router = createRouter({

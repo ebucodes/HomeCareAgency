@@ -37,7 +37,7 @@
           <span>Users</span></a>
       </li>
       <li class="sidebar-list">
-        <a class="sidebar-link sidebar-title" href="#">
+        <a class="sidebar-link sidebar-title" href="/my-activities">
           <vue-feather type="trending-up"></vue-feather>
           <span>All Activities </span>
         </a>
