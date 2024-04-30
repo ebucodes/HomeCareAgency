@@ -2,7 +2,9 @@ import {
     createRouter,
     createWebHistory
 } from "vue-router"
-import { useStore } from "vuex";
+import {
+    useStore
+} from "vuex";
 import Body from '../components/body';
 import Default from '../pages/dashboard/defaultPage.vue';
 /* Auth */
@@ -13,35 +15,45 @@ import AdminDashboard from '../pages/dashboard/admin';
 import ClientDashboard from '../pages/dashboard/client';
 import WorkerDashboard from '../pages/dashboard/worker';
 import AdminConfiguration from '../pages/admin/configuration';
+import MyActivity from "@/pages/myActivity.vue";
 
 
 const routes = [
-  /* Auth */
-  {
-    path: '/',
-    component: Login,
-    name: 'login',
-    meta: {
-      title: ' Login ',
+    /* Auth */
+    {
+        path: '/',
+        component: Login,
+        name: 'login',
+        meta: {
+            title: ' Login ',
+        },
     },
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: {
-      title: ' Register ',
-    }
-  },
+    {
+        path: '/register/health-care-worker',
+        name: 'register',
+        component: RegisterWorker,
+        meta: {
+            title: ' Register ',
+        }
+    },
 
     // register for client
-{
+    {
         path: '/register/client',
         name: 'registerClient',
         component: RegisterClient,
         meta: {
             title: ' Register ',
         }
+    },
+
+    {
+        path: '/my-activities',
+        component: MyActivity,
+        name: 'myActivity',
+        meta: {
+            title: ' My Activity ',
+        },
     },
     /* Admin */
     {
@@ -51,15 +63,15 @@ const routes = [
             auth: true,
         },
         children: [{
-            path: 'dashboard',
-            name: 'adminDashboard',
-            component: AdminDashboard,
-        },
-        {
-            path: 'configuration',
-            name: 'adminConfiguration',
-            component: AdminConfiguration,
-        },
+                path: 'dashboard',
+                name: 'adminDashboard',
+                component: AdminDashboard,
+            },
+            {
+                path: 'configuration',
+                name: 'adminConfiguration',
+                component: AdminConfiguration,
+            },
         ]
     },
     /* Client */
@@ -70,15 +82,15 @@ const routes = [
             auth: true,
         },
         children: [{
-            path: 'dashboard',
-            name: 'clientDashboard',
-            component: ClientDashboard,
-        },
-        {
-            path: 'configuration',
-            name: 'adminConfiguration',
-            component: AdminConfiguration,
-        },
+                path: 'dashboard',
+                name: 'clientDashboard',
+                component: ClientDashboard,
+            },
+            {
+                path: 'configuration',
+                name: 'adminConfiguration',
+                component: AdminConfiguration,
+            },
         ]
     },
     /* Worker */
@@ -89,15 +101,15 @@ const routes = [
             auth: true,
         },
         children: [{
-            path: 'dashboard',
-            name: 'workerDashboard',
-            component: WorkerDashboard,
-        },
-        {
-            path: 'configuration',
-            name: 'adminConfiguration',
-            component: AdminConfiguration,
-        },
+                path: 'dashboard',
+                name: 'workerDashboard',
+                component: WorkerDashboard,
+            },
+            {
+                path: 'configuration',
+                name: 'adminConfiguration',
+                component: AdminConfiguration,
+            },
         ]
     },
 
@@ -108,10 +120,10 @@ const routes = [
         path: '/default',
         component: Body,
         children: [{
-            path: '',
-            name: 'defaultRoot',
-            component: Default,
-        },
+                path: '',
+                name: 'defaultRoot',
+                component: Default,
+            },
 
         ]
     },
@@ -127,7 +139,7 @@ router.beforeEach((to, from, next) => {
         document.title = to.meta.title + ' | Home Care Agency';
     }
 
-    const path = ['/', '/register/client','/register/health-care-worker'];
+    const path = ['/', '/register/client', '/register/health-care-worker'];
     console.log(to.meta)
     // console.log(store.state.auth.user)
     // console.log(store.getters?.getUser)
