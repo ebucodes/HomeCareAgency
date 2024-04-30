@@ -16,24 +16,23 @@ import AdminConfiguration from '../pages/admin/configuration';
 
 
 const routes = [
-    /* Auth */
-    {
-        path: '/',
-        component: Login,
-        name: 'login',
-        meta: {
-            title: ' Login ',
-        },
+  /* Auth */
+  {
+    path: '/',
+    component: Login,
+    name: 'login',
+    meta: {
+      title: ' Login ',
     },
-    // register for worker
-    {
-        path: '/register/health-care-worker',
-        name: 'registerWorker',
-        component: RegisterWorker,
-        meta: {
-            title: ' Register ',
-        }
-    },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: {
+      title: ' Register ',
+    }
+  },
 
     // register for client
 {
